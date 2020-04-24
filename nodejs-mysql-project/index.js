@@ -65,10 +65,10 @@ app.post("/register/user", (req, res) => {
   });
 });
 
-app.get('/:id', (req, res) => {
-  const { id } = req.params;
-  res.send({ id });
-});
+// app.get('/:id', (req, res) => {
+//   const { id } = req.params;
+//   res.send({ id });
+// });
 
 app.put("/editUser/:id", (req, res) => {
   const id = req.params.id;
@@ -78,8 +78,9 @@ app.put("/editUser/:id", (req, res) => {
     if (error) {
       console.log("There is an error");
     } else {
+      console.log(result)
       res.render("editUser", {
-        data: result,
+        data: result[0],
       });
     }
   });
@@ -97,7 +98,7 @@ app.put("/editUser/success/:id", (req, res) => {
   const salary = req.body.editSalary;
 
   let sql = "UPDATE users_project SET name = ?, email = ?, password = ?, age = ?, location = ?, salary = ? WHERE id= ?";
-  const user = [name, email, password, age, location, salary];
+  const user = [name, email, password, age, location, salary, id];
 
   db.query(sql, user, (error, result) => {
     if (error) {
